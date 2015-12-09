@@ -232,3 +232,6 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# WebAPI documentation generated file
+*/App_Data/Documentation.xml
