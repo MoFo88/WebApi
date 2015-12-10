@@ -235,3 +235,6 @@ _Pvt_Extensions
 
 # WebAPI documentation generated file
 */App_Data/Documentation.xml
+
+# log file
+*/log.txt
