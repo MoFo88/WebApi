@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Web.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using WebApi;
 using WebApi.Controllers;
 
@@ -17,16 +18,21 @@ namespace WebApi.Tests.Controllers
         public void Get()
         {
             //// Arrange
-            //ValuesController controller = new ValuesController();
+            var mockLogger = new Mock<ILogger>();
+            mockLogger.Setup(x => x.Log(It.IsAny<string>()));
+            var mockContext = new Mock<IRepository>();
+            mockContext.Setup(x => x.GetAllValues()).Returns(new[] {"mocked", "returned", "value"});            
+            var controller = new ValuesController(mockLogger.Object, mockContext.Object);          
 
             //// Act
-            //IEnumerable<string> result = controller.Get();
+            IEnumerable<string> result = controller.Get();
 
             //// Assert
-            //Assert.IsNotNull(result);
-            //Assert.AreEqual(2, result.Count());
-            //Assert.AreEqual("value1", result.ElementAt(0));
-            //Assert.AreEqual("value2", result.ElementAt(1));
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result.Count());
+            Assert.AreEqual("mocked", result.ElementAt(0));
+            Assert.AreEqual("returned", result.ElementAt(1));
+            Assert.AreEqual("value", result.ElementAt(2));
         }
 
         //[TestMethod]
